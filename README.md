@@ -123,13 +123,13 @@ sudo netfilter-persistent save
 ### Установка одной командой
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/bekirovtimur/warp-relay/main/wr.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/openwarpkit/warp-relay/main/wr.sh | sudo bash
 ```
 
 Или скачайте и запустите скрипт:
 
 ```bash
-wget https://raw.githubusercontent.com/bekirovtimur/warp-relay/main/wr.sh
+wget https://raw.githubusercontent.com/openwarpkit/warp-relay/main/wr.sh
 chmod +x wr.sh
 sudo ./wr.sh
 ```
@@ -139,13 +139,13 @@ sudo ./wr.sh
 **Вариант 1 — один UDP-порт (стандартный режим)**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/bekirovtimur/warp-relay/main/simple.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/openwarpkit/warp-relay/main/simple.sh | sudo bash
 ```
 
 **Вариант 2 — несколько UDP-портов одновременно (мультипорт)**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/bekirovtimur/warp-relay/main/simple_multiport.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/openwarpkit/warp-relay/main/simple_multiport.sh | sudo bash
 ```
 
 Скрипт автоматически настраивает проброс для следующих UDP-портов (например используются порты Cloudflare WARP):
