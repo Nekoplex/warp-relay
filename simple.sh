@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 TAG="WR_RULE"
@@ -35,24 +34,40 @@ install_dependencies() {
         if command -v apt &>/dev/null; then
             export DEBIAN_FRONTEND=noninteractive
             apt update -qq
-            apt install -y -qq curl netfilter-persistent
-            SAVE_CMD="netfilter-persistent save"
+            apt install -y -qq curl
+            if [ "$FIREWALL_TYPE" = "iptables" ]; then
+                apt install -y -qq netfilter-persistent
+                SAVE_CMD="netfilter-persistent save"
+            fi
         elif command -v dnf &>/dev/null; then
-            dnf install -y -q curl iptables-services
-            SAVE_CMD="service iptables save"
+            dnf install -y -q curl
+            if [ "$FIREWALL_TYPE" = "iptables" ]; then
+                dnf install -y -q iptables-services
+                SAVE_CMD="service iptables save"
+            fi
         elif command -v yum &>/dev/null; then
-            yum install -y -q curl iptables-services
-            SAVE_CMD="service iptables save"
+            yum install -y -q curl
+            if [ "$FIREWALL_TYPE" = "iptables" ]; then
+                yum install -y -q iptables-services
+                SAVE_CMD="service iptables save"
+            fi
         elif command -v pacman &>/dev/null; then
             pacman -Syu --noconfirm curl
-            mkdir -p /etc/iptables
-            SAVE_CMD="iptables-save > /etc/iptables/iptables.rules"
+            if [ "$FIREWALL_TYPE" = "iptables" ]; then
+                mkdir -p /etc/iptables
+                SAVE_CMD="iptables-save > /etc/iptables/iptables.rules"
+            fi
         elif command -v apk &>/dev/null; then
             apk add --no-cache curl
-            mkdir -p /etc/iptables
-            SAVE_CMD="iptables-save > /etc/iptables/rules.v4"
+            if [ "$FIREWALL_TYPE" = "iptables" ]; then
+                mkdir -p /etc/iptables
+                SAVE_CMD="iptables-save > /etc/iptables/rules.v4"
+            fi
         fi
-        export SAVE_CMD
+
+        if [ -n "${SAVE_CMD:-}" ]; then
+            export SAVE_CMD
+        fi
         return 0
     fi
 
